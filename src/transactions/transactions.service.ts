@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Transaction } from './interfaces/transaction.interface';
 import { ethers } from 'ethers';
+
+import { Transaction } from './interfaces/transaction.interface';
 
 @Injectable()
 export class TransactionsService {

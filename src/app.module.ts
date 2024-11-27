@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+
 import { TransactionsModule } from './transactions/transactions.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -8,6 +10,7 @@ import { TransactionsModule } from './transactions/transactions.module';
       isGlobal: true,
     }),
     TransactionsModule,
+    PrismaModule,
   ],
   controllers: [],
   providers: [],

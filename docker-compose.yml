@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    container_name: ethereum-fetcher-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ethereum-fetcher
+    ports:
+      - '5432:5432'
