@@ -1,25 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { ethers } from 'ethers';
 
+import { PrismaService } from '../prisma/prisma.service';
+
 import { Transaction } from './interfaces/transaction.interface';
 
 @Injectable()
 export class TransactionsService {
-  private readonly transactions: Transaction[] = [];
   private readonly provider: ethers.JsonRpcProvider;
 
-  constructor() {
+  constructor(private prismaService: PrismaService) {
     this.provider = new ethers.JsonRpcProvider(process.env.ETH_NODE_URL);
   }
 
   async getAllTransactions() {
-    return this.transactions;
+    return this.prismaService.transaction.findMany();
   }
 
   async getTransactionsByHashes(transactionHashes: string) {
-    const foundTransaction = this.transactions.find(
-      (transaction) => transaction.transactionHash === transactionHashes,
-    );
+    const foundTransaction = await this.prismaService.transaction.findFirst({
+      where: { transactionHash: transactionHashes },
+    });
 
     if (foundTransaction) {
       return foundTransaction;
@@ -40,7 +41,7 @@ export class TransactionsService {
         value: transactionRawData.value.toString(),
       };
 
-      this.transactions.push(transactionData);
+      await this.prismaService.transaction.create({ data: transactionData });
 
       return transactionData;
     }
