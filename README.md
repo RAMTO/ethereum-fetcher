@@ -30,7 +30,7 @@ Before running the project please create `.env` or use the example one.
 cp .env.example .env
 ```
 
-```shel
+```shell
 API_PORT=
 ETH_NODE_URL=
 DB_CONNECTION_URL=
